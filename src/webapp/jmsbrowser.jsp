@@ -2,6 +2,7 @@
     "http://www.w3.org/TR/REC-html40/strict.dtd">
 <%@ page import="javax.naming.*" %>
 <%@ page import="javax.jms.*" %>
+<%@ page import="javax.jms.Queue" %>
 <%@ page import="java.util.*" %>
 <%
 	String queueConnectionFactory = request.getParameter("queueConnectionFactory");
