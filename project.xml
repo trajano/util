@@ -28,12 +28,6 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>xdoclet</groupId>
-      <artifactId>xdoclet</artifactId>
-      <version>1.2.1</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>httpunit</groupId>
       <artifactId>httpunit</artifactId>
       <version>1.6</version>
@@ -55,7 +49,7 @@
     <dependency>
       <groupId>xdoclet</groupId>
       <artifactId>xdoclet-web-module</artifactId>
-      <version>1.2.1</version>
+      <version>1.2.2-SNAPSHOT</version>
       <type>jar</type>
       <url>http://xdoclet.sf.net/</url>
     </dependency>
