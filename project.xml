@@ -16,9 +16,9 @@
   </repository>
   <dependencies>
     <dependency>
-      <groupId>servletapi</groupId>
-      <artifactId>servletapi</artifactId>
-      <version>2.4-20040521</version>
+      <groupId>geronimo-spec</groupId>
+      <artifactId>geronimo-spec-j2ee</artifactId>
+      <version>1.4-rc4</version>
       <type>jar</type>
     </dependency>
     <dependency>
