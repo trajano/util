@@ -46,13 +46,6 @@
         <cactus.bundle>true</cactus.bundle>
       </properties>
     </dependency>
-    <dependency>
-      <groupId>xdoclet</groupId>
-      <artifactId>xdoclet-web-module</artifactId>
-      <version>1.2.2-SNAPSHOT</version>
-      <type>jar</type>
-      <url>http://xdoclet.sf.net/</url>
-    </dependency>
   </dependencies>
   <build>
     <sourceDirectory>src/java</sourceDirectory>

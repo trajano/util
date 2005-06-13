@@ -11,6 +11,14 @@
 				classes or libraries.  But do not program this way normally.</p>
 			</answer>
 		</faq>
+		<faq id="xdoclet">
+			<question>Why isn't XDoclet used to generate the descriptors?</question>
+			<answer>
+				Originally, XDoclet was used to build the descriptors.  However, 
+				the latest version of the XDoclet plugin is required and there is no simplified
+				method of getting it, I have decided to remove it.
+			</answer>
+		</faq>
 		<faq id="jndi-web">
 			<question>Why did you create a version of jndi.jsp that provides no links?</question>
 			<answer>
