@@ -8,7 +8,10 @@
     <release version="1.1" date="in CVS">
       <action dev="trajano" type="add">
         Added env.jsp which provides a dump of the system properties, session attributes and cookies.
-      </action>              
+      </action>
+      <action dev="trajano" type="add">
+        Added link to java: in jndi*.jsp, support for non-default contexts and submit button.
+      </action>
     </release>
 
     <release version="1.0" date="2003-06-13">
