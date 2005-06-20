@@ -4,7 +4,7 @@
   <pomVersion>3</pomVersion>
   <artifactId>util</artifactId>
   <groupId>twiff</groupId>
-  <currentVersion>1.0</currentVersion>
+  <currentVersion>1.1</currentVersion>
   <package>net.trajano.webutil</package>
   <url>http://twiff.sourceforge.net/modules/util/</url>
   <name>Utility Web Application</name>
@@ -54,6 +54,7 @@
   </build>
   <reports>
     <report>maven-changelog-plugin</report>
+    <report>maven-changes-plugin</report>
     <report>maven-faq-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jxr-plugin</report>
