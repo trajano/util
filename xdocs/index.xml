@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<document>
+  <properties>
+    <author email="trajano.AT.sourceforge.DOT.net">Archimedes Trajano</author>
+
+    <title>PicoServlet Introduction</title>
+  </properties>
+
+  <body>
+<section name="Introduction">
+<p>
+This provides a set of utility JSPs that can be used in debugging JNDI trees, 
+JMS, JDBC, EJBs and web applications. These JSPs are standalone and do 
+not require any dependencies aside from being in a J2EE container. 
+The JSPs can also be extracted and put into other projects that might 
+have resources that are in the java: tree. This project also serves as a 
+sample web application that is integration tested with Cactus. 
+</p>
+<p>
+The target audience for this tool is a J2EE application developer with
+knowledge on how to deploy applications to the container.  Another
+audience would be the testers as this provides direct access to the JMS and
+JDBC resources that is available to the application.
+</p>
+</section>
+
+<section name="Installation">
+
+<p>
+There are three distribution packages for this application: a source 
+distribution, an EAR distribution and a WAR distribution.
+</p>
+<p>
+The WAR file can be deployed to any standard J2EE or web container.  It
+can also be unzipped to get the JSPs which can be copied into an existing
+J2EE application.  The JSPs may also be extracted from the source
+distribution to be included into an existing application.
+</p>
+<p>
+The EAR file can be deployed to any standard J2EE container.  This
+distribution is primarily deployed on servers used by the test team.  The
+context root is /util.
+</p>
+</section>
+
+<section name="The Files">
+	<section name="db.jsp">
+		This JSP file provides access to JDBC resources that are registered in the 
+		default JNDI tree.
+	</section>
+	<section name="ejb.jsp">
+		This JSP file lists all the methods available in an EJB when provided with a
+		registered EJB Home in the default JNDI tree.
+	</section>
+	<section name="env.jsp">
+		This JSP file outputs all the system properties, session attributes and 
+		cookies.  Normally this would be copied into the application to check what
+		values the application sets in the session.
+	</section>
+	<section name="jms.jsp">
+		This JSP file sends a text message to a JMS queue.
+	</section>
+	<section name="jmsbrowser.jsp">
+		This JSP file browses the contents of a JMS queue and provides a way
+		of clearing the contents of the queue.
+	</section>
+	<section name="jndi.jsp">
+		This JSP file provides way of browsing JNDI trees.  It can use the default
+		or the a user defined JNDI context.
+	</section>
+	<section name="jndi-web.jsp">
+		This JSP file provides way of browsing JNDI trees.  It can use the default
+		or the a user defined JNDI context.  This is a modified version that
+		would support web only containers.
+	</section>
+</section>
+	</body>
+</document>
