@@ -1,6 +1,5 @@
 <%@ page import="javax.naming.*" %>
 <%@ page import="java.lang.reflect.*" %>
-<%@ page import="javax.ejb.*" %>
 <%
 	String ejbName = request.getParameter("ejb");
 	Method[] homeMethods = null;

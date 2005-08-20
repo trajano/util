@@ -2,7 +2,6 @@
 <%@ page import="javax.ejb.*" %>
 <%@ page import="javax.sql.*" %>
 <%@ page import="javax.naming.*" %>
-<%@ page import="javax.jms.*" %>
 <%
 	String name = request.getParameter("name");
 	String contextFactory = request.getParameter("contextFactory");
@@ -100,7 +99,7 @@
 	}
 %>
 <%
-	if (o instanceof QueueConnectionFactory) {
+	if (o instanceof javax.jms.QueueConnectionFactory) {
 %>
 	<p><a href="jms.jsp?queueConnectionFactory=<%=name%>">JMS Sender</a></p>
 	<p><a href="jmsbrowser.jsp?queueConnectionFactory=<%=name%>">JMS Viewer</a></p>
@@ -108,7 +107,7 @@
 	}
 %>
 <%
-	if (o instanceof Queue) {
+	if (o instanceof javax.jms.Queue) {
 %>
 	<p><a href="jms.jsp?queue=<%=name%>">JMS Sender</a></p>
 	<p><a href="jmsbrowser.jsp?queue=<%=name%>">JMS Viewer</a></p>

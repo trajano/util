@@ -1,7 +1,4 @@
 <%@ page import="java.util.*" %>
-<%@ page import="javax.sql.*" %>
-<%@ page import="javax.naming.*" %>
-<%@ page import="javax.jms.*" %>
 
 <ul>
 <!--<li><a href="#env">System Environment Variables</a></li> -->
