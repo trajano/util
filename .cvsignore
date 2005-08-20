@@ -4,3 +4,5 @@ target
 build.properties
 jcoverage.ser
 *.log
+*.runtime
+.deployables
