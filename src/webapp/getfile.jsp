@@ -1,8 +1,8 @@
 <%@ page import="java.io.*" %>
 <%
 	String name = request.getParameter("name");
-	response.setContentType("text/plain");
 	if (name != null && name != "") {
+		response.setContentType("text/plain");
 		InputStream is = new FileInputStream(new File(name));
 		byte[] buf = new byte[10240];
 		int c =is.read(buf);
