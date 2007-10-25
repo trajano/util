@@ -4,9 +4,9 @@
 	if (name != null && name != "") {
 		File file = new File(name);
 		if (file.isDirectory()) {
-%><ul><%
+%><h1><%=file%></h1><ul><%
 			String[] files = file.list();
-			for (int i = 0; i < files.length(); ++i) {
+			for (int i = 0; i < files.length; ++i) {
 				%><li><a href="getfile.jsp?name=<%= new File(file, files[i]).toString() %>"><%= files[i] %></a></li><%
 			}
 %></ul><%
