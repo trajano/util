@@ -2,16 +2,16 @@
 <%@ page import="javax.sql.*" %>
 <%@ page import="java.sql.*" %>
 <%
-	String name = (request.getParameter("name") == null ? "" : request.getParameter("name").replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;"));
-	String sql = (request.getParameter("sql") == null ? "" : request.getParameter("sql").replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;"));
-	String sqlTextArea = (request.getParameter("sqlTextArea") == null ? "" : request.getParameter("sqlTextArea").replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;"));
+	String name = (request.getParameter("name") == null ? "" : request.getParameter("name"));
+	String sql = (request.getParameter("sql") == null ? "" : request.getParameter("sql"));
+	String sqlTextArea = (request.getParameter("sqltextarea") == null ? "" : request.getParameter("sqltextarea"));
 	String type = request.getParameter("type");
 %>
 <form>
-	Name: <input name="name" size="100" value="<%= name %>" /><br/>
-	SQL: <input name="sql" size="100" value="<%= sql %>" /><br />
+	Name: <input name="name" size="100" value="<%= name.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %>" /><br/>
+	SQL: <input name="sql" size="100" value="<%= sql.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %>" /><br />
 	The contents of text area is ignored if there is some content in the line above.<br />
-	<textarea name="sqltextarea" rows="5" cols="80"><%= sqlTextArea %></textarea><br />
+	<textarea name="sqltextarea" rows="5" cols="80"><%= sqlTextArea.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %></textarea><br />
 	<input name="type" type="radio" size="100" checked="checked" value="query" />query<br />
 	<input name="type" type="radio" size="100" value="update" />update <br />
 	<input type="submit" />
