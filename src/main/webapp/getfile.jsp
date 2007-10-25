@@ -2,13 +2,23 @@
 <%
 	String name = request.getParameter("name");
 	if (name != null && name != "") {
-		response.setContentType("text/plain");
-		InputStream is = new FileInputStream(new File(name));
-		byte[] buf = new byte[10240];
-		int c =is.read(buf);
-		while (c >= 0) {
-			out.write(new String(buf, 0, c));
-			c =is.read(buf);
+		File file = new File(name);
+		if (file.isDirectory()) {
+%><ul><%
+			String[] files = file.list();
+			for (int i = 0; i < files.length(); ++i) {
+				%><li><a href="getfile.jsp?name=<%= new File(file, files[i]).toString() %>"><%= files[i] %></a></li><%
+			}
+%></ul><%
+		} else  if (file.exists()) {
+			response.setContentType("text/plain");
+			InputStream is = new FileInputStream(file);
+			byte[] buf = new byte[10240];
+			int c =is.read(buf);
+			while (c >= 0) {
+				out.write(new String(buf, 0, c));
+				c =is.read(buf);
+			}
 		}
 	} else {
 %>
