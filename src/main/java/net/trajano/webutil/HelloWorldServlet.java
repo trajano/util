@@ -17,17 +17,23 @@ import javax.servlet.http.HttpServletResponse;
  * @version $Id$
  */
 public class HelloWorldServlet extends HttpServlet {
-    /**
-     * This prints out the standard "Hello world" message with a date stamp.
-     * 
-     * @param request
-     *                   the HTTP request object
-     * @param response
-     *                   the HTTP response object
-     * @throws IOException
-     *                    thrown when there is a problem getting the writer
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getWriter().println("Hello world on " + new Date());
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4069226002214793588L;
+
+	/**
+	 * This prints out the standard "Hello world" message with a date stamp.
+	 * 
+	 * @param request
+	 *            the HTTP request object
+	 * @param response
+	 *            the HTTP response object
+	 * @throws IOException
+	 *             thrown when there is a problem getting the writer
+	 */
+	protected void doGet(final HttpServletRequest request,
+			final HttpServletResponse response) throws IOException {
+		response.getWriter().println("Hello world on " + new Date());
+	}
 }
