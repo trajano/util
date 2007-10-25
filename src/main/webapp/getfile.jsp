@@ -1,7 +1,7 @@
 <%@ page import="java.io.*" %>
 <%
-	String name = request.getParameter("name");
-	if (name != null && name != "") {
+	String name = (request.getParameter("name") == null ? "" : request.getParameter("name") );
+	if (name != "") {
 		File file = new File(name);
 		if (file.isDirectory()) {
 %><h1><%=file%></h1><ul><%
