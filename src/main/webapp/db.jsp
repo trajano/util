@@ -24,6 +24,36 @@
 	String type = request.getParameter("type");
 </jsp:scriptlet>
 <html>
+<head>
+	<style>
+			.clob_toggle {
+				display: block;
+			}   
+			.clob {
+				display: none;
+			}   
+	</style>
+	<script><![CDATA[
+		function toggle(ref) {
+			var v = ref.nextSibling;
+			while(v.nodeType == 3) {
+  				v = v.nextSibling;
+  			}
+  			v.style.display = "block";
+  			ref.style.display = "none";
+		}
+	]]></script>
+	<noscript>
+		<style>
+			.clob_toggle {
+				display: none;
+			}   
+			.clob {
+				display: block;
+			}   
+		</style>
+	</noscript>
+</head>
 <body>
 <form>
 	Name: <jsp:element name="input">
@@ -72,8 +102,9 @@
 	                 if(rs.getMetaData().getColumnCount()<x) {
 	                     x=-1;
 	                 } else if (rs.getMetaData().getColumnType(x) == Types.CLOB)  {
-	                 	 final Reader reader = new BufferedReader(rs.getClob(x).getCharacterStream());
-	                     out.print("<td><pre>");
+	                 	Clob clob = rs.getClob(x);
+	                 	 final Reader reader = new BufferedReader(clob.getCharacterStream());
+	                     out.print("<td><a href='#' onclick='toggle(this)' class='clob_toggle'>View CLOB</a><pre id='"+ clob + "' class='clob'>");
 	                 	 int c = reader.read();
 	                 	 while (c != -1) {
 	                 	 	if (c == '>') {
@@ -90,7 +121,10 @@
 	                 	 reader.close();
 						out.println("</pre></td>");
 						x++;
-	                 } else {
+	                 } else if (rs.getObject(x) == null) {
+	                     out.println("<td><em>null</em></td>");
+	                     x++;
+	                 }else {
 	                     out.println("<td>" + rs.getString(x) + "</td>");
 	                     x++;
 	                 }
