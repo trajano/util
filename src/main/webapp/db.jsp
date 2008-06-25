@@ -1,6 +1,7 @@
 <%@ page import="javax.naming.*" %>
 <%@ page import="javax.sql.*" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
 <%
 	String name = (request.getParameter("name") == null ? "" : request.getParameter("name"));
 	String sql = (request.getParameter("sql") == null ? "" : request.getParameter("sql"));
@@ -47,9 +48,25 @@
 	             while(x!=-1) {
 	                 if(rs.getMetaData().getColumnCount()<x) {
 	                     x=-1;
-	                 } else if (rs.getMetaData().getColumnType(x) == java.sql.Types.CLOB)  {
-	                     out.println("<td><pre>" + rs.getClob(x).getSubString(0, rs.getClob(x).length()).replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") + "</pre></td>");
-	                     x++;
+	                 } else if (rs.getMetaData().getColumnType(x) == Types.CLOB)  {
+	                 	 final Reader reader = new BufferedReader(rs.getClob(x).getCharacterStream());
+	                     out.print("<td><pre>");
+	                 	 int c = reader.read();
+	                 	 while (c != -1) {
+	                 	 	if (c == '>') {
+	                 	 		out.print("&gt;");
+	                 	 	} else if (c == '<') {
+	                 	 		out.print("&lt;");
+	                 	 	} else if (c == '&') {
+								out.print("&amp;");
+							} else {
+								out.print((char)c);
+							}
+							c = reader.read();
+	                 	 }
+	                 	 reader.close();
+						out.println("</pre></td>");
+						x++;
 	                 } else {
 	                     out.println("<td>" + rs.getString(x) + "</td>");
 	                     x++;
