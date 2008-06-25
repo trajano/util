@@ -5,31 +5,37 @@
 	xmlns:jsp="http://java.sun.com/JSP/Page">
 	<jsp:directive.page 
 		contentType="text/html"
-		import="javax.naming.*,javax.sql.*,java.sql.*java.io." 
+		import="javax.naming.*,javax.sql.*,java.sql.*,java.io.*" 
 		isErrorPage="false" 
 		isThreadSafe="true"
 		session="true" />
 	<jsp:declaration><![CDATA[
-		private String getRequestParameter(final String key) {
-			return (request.getParameter(key) == null ? "" : request.getParameter("name"));
+		private String getRequestParameter(final HttpServletRequest request, final String key) {
+			return (request.getParameter(key) == null ? "" : request.getParameter(key));
 		}
 		private String escapeXml(final String string) {
 			return string.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;");
 		}
 	]]></jsp:declaration>
 <jsp:scriptlet>
-	String name = getRequestParameter("name");
-	String sql = getRequestParameter("sql");
-	String sqlTextArea = getRequestParameter("sqltextarea");
+	String name = getRequestParameter(request,"name");
+	String sql = getRequestParameter(request,"sql");
+	String sqlTextArea = getRequestParameter(request,"sqltextarea");
 	String type = request.getParameter("type");
 </jsp:scriptlet>
 <html>
 <body>
 <form>
-	Name: <input name="name" size="100"><jsp:attribute><jsp:expression>escapeXml(name)</jsp:expression></jsp:attribute></input><br/>
-	SQL: <input name="name" size="100"><jsp:attribute><jsp:expression>escapeXml(sql)</jsp:expression></jsp:attribute></input><br />
+	Name: <jsp:element name="input">
+		<jsp:attribute name="name">name</jsp:attribute>
+		<jsp:attribute name="size">100</jsp:attribute>
+		<jsp:attribute name="value"><jsp:expression>escapeXml(name)</jsp:expression></jsp:attribute></jsp:element><br/>
+	SQL: <jsp:element name="input">
+		<jsp:attribute name="name">sql</jsp:attribute>
+		<jsp:attribute name="size">100</jsp:attribute>
+		<jsp:attribute name="value"><jsp:expression>escapeXml(sql)</jsp:expression></jsp:attribute></jsp:element><br/>
 	The contents of text area is ignored if there is some content in the line above.<br />
-	<textarea name="sqltextarea" rows="5" cols="80"><jsp:expression>escapeXml(sqlTextArea)</jsp:expression></textarea><br />
+	<textarea name="sqltextarea" rows="5" cols="80"><jsp:expression  name="value">escapeXml(sqlTextArea)</jsp:expression></textarea><br />
 	<input name="type" type="radio" size="100" checked="checked" value="query" />query<br />
 	<input name="type" type="radio" size="100" value="update" />update <br />
 	<input type="submit" />
@@ -71,11 +77,11 @@
 	                 	 int c = reader.read();
 	                 	 while (c != -1) {
 	                 	 	if (c == '>') {
-	                 	 		out.print("&gt;");
+	                 	 		out.print("&amp;gt;");
 	                 	 	} else if (c == '<') {
-	                 	 		out.print("&lt;");
+	                 	 		out.print("&amp;lt;");
 	                 	 	} else if (c == '&') {
-								out.print("&amp;");
+								out.print("&amp;amp;");
 							} else {
 								out.print((char)c);
 							}
