@@ -8,10 +8,10 @@
 	String type = request.getParameter("type");
 %>
 <form>
-	Name: <input name="name" size="100" value="<%= name.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %>" /><br/>
-	SQL: <input name="sql" size="100" value="<%= sql.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %>" /><br />
+	Name: <input name="name" size="100" value="<%= name.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %>" /><br/>
+	SQL: <input name="sql" size="100" value="<%= sql.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %>" /><br />
 	The contents of text area is ignored if there is some content in the line above.<br />
-	<textarea name="sqltextarea" rows="5" cols="80"><%= sqlTextArea.replaceAll("&", "&amp;").replaceAll("<", "&gt;").replaceAll(">", "&lt;") %></textarea><br />
+	<textarea name="sqltextarea" rows="5" cols="80"><%= sqlTextArea.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %></textarea><br />
 	<input name="type" type="radio" size="100" checked="checked" value="query" />query<br />
 	<input name="type" type="radio" size="100" value="update" />update <br />
 	<input type="submit" />
@@ -47,6 +47,9 @@
 	             while(x!=-1) {
 	                 if(rs.getMetaData().getColumnCount()<x) {
 	                     x=-1;
+	                 } else if (rs.getMetaData().getColumnType(x) == java.sql.Types.CLOB)  {
+	                     out.println("<td><pre>" + rs.getClob(x).getSubString(0, rs.getClob(x).length()).replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") + "</pre></td>");
+	                     x++;
 	                 } else {
 	                     out.println("<td>" + rs.getString(x) + "</td>");
 	                     x++;
