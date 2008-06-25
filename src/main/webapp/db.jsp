@@ -1,23 +1,40 @@
-<%@ page import="javax.naming.*" %>
-<%@ page import="javax.sql.*" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.io.*" %>
-<%
-	String name = (request.getParameter("name") == null ? "" : request.getParameter("name"));
-	String sql = (request.getParameter("sql") == null ? "" : request.getParameter("sql"));
-	String sqlTextArea = (request.getParameter("sqltextarea") == null ? "" : request.getParameter("sqltextarea"));
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page">
+	<jsp:directive.page 
+		contentType="text/html"
+		import="javax.naming.*,javax.sql.*,java.sql.*java.io." 
+		isErrorPage="false" 
+		isThreadSafe="true"
+		session="true" />
+	<jsp:declaration><![CDATA[
+		private String getRequestParameter(final String key) {
+			return (request.getParameter(key) == null ? "" : request.getParameter("name"));
+		}
+		private String escapeXml(final String string) {
+			return string.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+		}
+	]]></jsp:declaration>
+<jsp:scriptlet>
+	String name = getRequestParameter("name");
+	String sql = getRequestParameter("sql");
+	String sqlTextArea = getRequestParameter("sqltextarea");
 	String type = request.getParameter("type");
-%>
+</jsp:scriptlet>
+<html>
+<body>
 <form>
-	Name: <input name="name" size="100" value="<%= name.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %>" /><br/>
-	SQL: <input name="sql" size="100" value="<%= sql.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %>" /><br />
+	Name: <input name="name" size="100"><jsp:attribute><jsp:expression>escapeXml(name)</jsp:expression></jsp:attribute></input><br/>
+	SQL: <input name="name" size="100"><jsp:attribute><jsp:expression>escapeXml(sql)</jsp:expression></jsp:attribute></input><br />
 	The contents of text area is ignored if there is some content in the line above.<br />
-	<textarea name="sqltextarea" rows="5" cols="80"><%= sqlTextArea.replaceAll("&", "&amp;").replaceAll(">", "&gt;").replaceAll("<", "&lt;") %></textarea><br />
+	<textarea name="sqltextarea" rows="5" cols="80"><jsp:expression>escapeXml(sqlTextArea)</jsp:expression></textarea><br />
 	<input name="type" type="radio" size="100" checked="checked" value="query" />query<br />
 	<input name="type" type="radio" size="100" value="update" />update <br />
 	<input type="submit" />
 </form>
-<%
+<jsp:scriptlet><![CDATA[
 	if (!"".equals(name) && !("".equals(sql) && "".equals(sqlTextArea) )) {
 		Context ctx = new InitialContext();
 		DataSource ds = (DataSource)ctx.lookup(name);
@@ -80,4 +97,7 @@
 			out.print("result: " + statement.executeUpdate());
 		}
 	}
-%>
+]]></jsp:scriptlet>
+</body>
+</html>
+</jsp:root>
