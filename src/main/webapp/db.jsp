@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3c.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core" version="2.0">
+<jsp:root
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:sql="http://java.sun.com/jstl/sql"
+	xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	version="2.0">
 <jsp:directive.page 
 		contentType="text/html"
 		import="javax.naming.*,javax.sql.*,java.sql.*,java.io.*,java.util.*" 
@@ -84,6 +89,16 @@
 	<input name="type" type="radio" size="100" value="update" />update <br />
 	<input type="submit" />
 </form>
+<c:if test="${!empty(param.name) and !empty(param.sqltextarea)}">
+<c:choose>
+	<c:when test="${param.type == 'query'}">
+	</c:when>
+	<c:when test="${param.type == 'queryTable'}">
+	</c:when>
+	<c:when test="${param.type == 'update'}">
+	</c:when>
+</c:choose>
+</c:if>
 <jsp:scriptlet><![CDATA[
 	if (!"".equals(name) && !("".equals(sql) && "".equals(sqlTextArea) )) {
 		Context ctx = new InitialContext();
