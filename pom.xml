@@ -2,6 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.trajano</groupId>
   <artifactId>util</artifactId>
+  <name>Utility Web Application</name>
   <version>2.0</version>
   <shortDescription>A set of utility JSPs.</shortDescription>
     <description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.  These JSPs
