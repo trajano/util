@@ -1,8 +1,0 @@
-target
-.classpath
-.project
-build.properties
-jcoverage.ser
-*.log
-*.runtime
-.deployables
