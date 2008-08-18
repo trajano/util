@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root
 	xmlns:jsp="http://java.sun.com/JSP/Page"
-	xmlns:sql="http://java.sun.com/jstl/sql"
+	xmlns:sql="http://java.sun.com/jstl/sql_rt"
 	xmlns="http://www.w3c.org/1999/xhtml"
-	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:c="http://java.sun.com/jstl/core_rt"
 	version="2.0">
 <jsp:directive.page 
 		contentType="text/html"
