@@ -1,19 +1,49 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>net.trajano</groupId>
-  <artifactId>util</artifactId>
-  <name>Utility Web Application</name>
-  <version>2.0</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.trajano.util</groupId>
+	<artifactId>util</artifactId>
+	<name>Utility Web Application</name>
+	<version>3.0.0-SNAPSHOT</version>
+	<parent>
+		<groupId>net.trajano</groupId>
+		<artifactId>trajano</artifactId>
+		<version>5</version>
+	</parent>
 
-    <description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.  These JSPs
-  are standalone and do not require any dependencies aside from being in a J2EE container.  The JSPs can also be extracted 
+	<description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.  These JSPs
+  are standalone and do not require any dependencies aside from being in a JavaEE container.  The JSPs can also be extracted 
 and put into other projects that might have resources that are in the java: tree.  This project also serves as a sample web application that is integration tested with Cactus.</description>
-  <packaging>war</packaging>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-j2ee_1.4_spec</artifactId>
-      <version>1.1</version>
-    </dependency>
-  </dependencies>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<licenses>
+		<license>
+			<name>Eclipse Public License 1.0</name>
+			<url>http://www.spdx.org/licenses/EPL-1.0</url>
+		</license>
+	</licenses>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<!-- web.xml is not mandatory since JavaEE 5 -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<!-- <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors> 
+						<warSourceDirectory>WebContent</warSourceDirectory> <webResources> <resource> 
+						<directory>src/main/webapp2</directory> <filtering>true</filtering> </resource> 
+						</webResources> -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
