@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 //EN" 
     "http://www.w3.org/TR/REC-html40/strict.dtd">
-<%@ page import="javax.naming.*" %>
+<%@ page import="javax.naming.*" session="false"%>
 <%@ page import="javax.jms.*" %>
 <%@ page import="javax.jms.Queue" %>
 <%@ page import="java.util.*" %>

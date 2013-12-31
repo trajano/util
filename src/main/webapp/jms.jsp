@@ -1,4 +1,4 @@
-<%@ page import="javax.naming.*" %>
+<%@ page import="javax.naming.*" session="false"%>
 <%@ page import="javax.jms.*" %>
 <%
 	String queueConnectionFactory = request.getParameter("queueConnectionFactory");
