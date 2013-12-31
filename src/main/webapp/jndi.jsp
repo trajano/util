@@ -29,7 +29,7 @@
     if ("".equals(contextFactory)) {
         ctx = new InitialContext();
     } else {
-        final Hashtable<String, String> env = new Hashtable<>();
+        final Hashtable<String, String> env = new Hashtable<String,String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
         if (providerUrl.length() > 0) {
             env.put(Context.PROVIDER_URL, providerUrl);

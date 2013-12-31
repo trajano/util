@@ -11,21 +11,14 @@
 		<version>5</version>
 	</parent>
 
-	<description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.  These JSPs
-  are standalone and do not require any dependencies aside from being in a JavaEE container.  The JSPs can also be extracted 
-and put into other projects that might have resources that are in the java: tree.  This project also serves as a sample web application that is integration tested with Cactus.</description>
+	<description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.</description>
 	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
+			<groupId>javaee</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<version>5</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>bootstrap</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 	</dependencies>
 	<licenses>
@@ -41,23 +34,14 @@ and put into other projects that might have resources that are in the java: tree
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.5</source>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
-				<configuration>
-					<!-- web.xml is not mandatory since JavaEE 5 -->
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<!-- <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors> 
-						<warSourceDirectory>WebContent</warSourceDirectory> <webResources> <resource> 
-						<directory>src/main/webapp2</directory> <filtering>true</filtering> </resource> 
-						</webResources> -->
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

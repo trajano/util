@@ -2,11 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>Environment dump</title>
 <link rel="stylesheet"
-	href="webjars/bootstrap/3.0.2/css/bootstrap.min.css" />
-<script type="text/javascript" src="webjars/jquery/1.9.0/jquery.min.js"></script>
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
 <script type="text/javascript"
-	src="webjars/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript"
+	src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body data-target="#scrollspy" data-spy="scroll">
@@ -25,9 +27,10 @@
 				</ul>
 			</div>
 			<div class="col-md-9 column">
-				<h1>
+				<h1>Environment dump</h1>
+				<h2>
 					<a id="request">Request Data</a>
-				</h1>
+				</h2>
 				<table class="table">
 					<col width="40%">
 					<col width="60%">
@@ -59,10 +62,11 @@
 					</tbody>
 				</table>
 
-				<h1>
+				<h2>
 					<a id="header">HTTP Request Header</a>
-				</h1>
+				</h2>
 				<%
+				    @SuppressWarnings("unchecked")
 				    final Enumeration<String> headerNames = request.getHeaderNames();
 				%>
 				<table class="table">
@@ -85,9 +89,9 @@
 					%>
 				</table>
 
-				<h1>
+				<h2>
 					<a id="env">System Environment Variables</a>
-				</h1>
+				</h2>
 				<table class="table">
 					<col width="40%">
 					<col width="60%">
@@ -128,9 +132,9 @@
 					%>
 				</table>
 
-				<h1>
+				<h2>
 					<a id="properties">System Properties</a>
-				</h1>
+				</h2>
 
 				<table class="table">
 					<col width="40%">
@@ -188,11 +192,12 @@
 					%>
 				</table>
 
-				<h1>
+				<h2>
 					<a id="session">Session Attributes</a>
-				</h1>
+				</h2>
 				<%
 				    try {
+				        @SuppressWarnings("unchecked")
 				        final Enumeration<String> sessionAttributeNames = request
 				                .getSession(false).getAttributeNames();
 				%>
@@ -227,9 +232,9 @@
 				%>
 
 
-				<h1>
+				<h2>
 					<a id="cookies">Cookies</a>
-				</h1>
+				</h2>
 				<table class="table">
 					<tr>
 						<th>Name</th>
