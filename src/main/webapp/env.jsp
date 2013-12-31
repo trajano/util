@@ -1,134 +1,254 @@
 <%@ page import="java.util.*" session="false"%>
 <!DOCTYPE html>
-<ul>
-	<li><a href="#env">System Environment Variables</a></li>
-	<li><a href="#prop">System Properties</a></li>
-	<li><a href="#session">Session Attributes</a></li>
-	<li><a href="#cookie">Cookies</a></li>
-</ul>
+<html lang="en">
+<head>
+<link rel="stylesheet"
+	href="webjars/bootstrap/3.0.2/css/bootstrap.min.css" />
+<script type="text/javascript" src="webjars/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript"
+	src="webjars/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body data-target="#scrollspy" data-spy="scroll">
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-3 column" id="scrollspy">
+				&nbsp;
+				<ul class="nav nav-stacked nav-pills" id="affix" data-offset-top="0"
+					data-spy="affix">
+					<li class="active"><a href="#request">Request Data</a></li>
+					<li><a href="#header">HTTP Request Header</a></li>
+					<li><a href="#env">System Environment Variables</a></li>
+					<li><a href="#properties">System Properties</a></li>
+					<li><a href="#session">Session Attributes</a></li>
+					<li><a href="#cookies">Cookies</a></li>
+				</ul>
+			</div>
+			<div class="col-md-9 column">
+				<h1>
+					<a id="request">Request Data</a>
+				</h1>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tbody>
+						<tr>
+							<th>Auth Type</th>
+							<td><%=request.getAuthType()%></td>
+						</tr>
+						<tr>
+							<th>Character Encoding</th>
+							<td><%=request.getCharacterEncoding()%></td>
+						</tr>
+						<tr>
+							<th>Context Path</th>
+							<td><%=request.getContextPath()%></td>
+						</tr>
+						<tr>
+							<th>Remote User</th>
+							<td><%=request.getRemoteUser()%></td>
+						</tr>
+						<tr>
+							<th>Secure</th>
+							<td><%=request.isSecure()%></td>
+						</tr>
+						<tr>
+							<th>User Principal</th>
+							<td><%=request.getUserPrincipal()%></td>
+						</tr>
+					</tbody>
+				</table>
 
-<h1>
-	<a id="principal">Principal Info</a>
-</h1>
-<%
-    try {
-        out.println("Principal = " + request.getUserPrincipal());
-    } catch (Exception e) {
+				<h1>
+					<a id="header">HTTP Request Header</a>
+				</h1>
+				<%
+				    final Enumeration<String> headerNames = request.getHeaderNames();
+				%>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    while (headerNames.hasMoreElements()) {
+					        final String next = headerNames.nextElement();
+					%>
+					<tr>
+						<td><%=next%></td>
+						<td><%=request.getHeader(next)%></td>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
 
-    }
-%>
+				<h1>
+					<a id="env">System Environment Variables</a>
+				</h1>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    final Map<String, String> env = System.getenv();
+					    for (final String envVar : new TreeSet<String>(env.keySet())) {
+					%>
+					<tr>
+						<td><%=envVar%></td>
+						<%
+						    if (env.get(envVar).contains(";")) {
+						%>
+						<td>
+							<ul>
+								<%
+								    for (final String pathElement : env.get(envVar).split(";")) {
+								%>
+								<li><%=pathElement%></li>
+								<%
+								    }
+								%>
+							</ul>
+						</td>
+						<%
+						    } else {
+						%>
+						<td><%=env.get(envVar)%></td>
+						<%
+						    }
+						%>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
 
-<h1>
-	<a id="env">System Environment Variables</a>
-</h1>
-<table border="1">
-	<tr>
-		<th>Name</th>
-		<th>Value</th>
-	</tr>
-	<%
-	    final Map<String, String> env = System.getenv();
-	    final Set<String> envSet = new TreeSet<String>(env.keySet());
-	    for (String key : envSet) {
-	%>
-	<tr>
-		<td><%=key%></td>
-		<td><%=env.get(key)%></td>
-	</tr>
-	<%
-	    }
-	%>
-</table>
+				<h1>
+					<a id="properties">System Properties</a>
+				</h1>
 
-<h1>
-	<a id="System Properties">System Properties</a>
-</h1>
-<%
-    try {
-%>
-<table border="1">
-	<tr>
-		<th>Name</th>
-		<th>Value</th>
-	</tr>
-	<%
-	    final Properties props = System.getProperties();
-	        final Set propsSet = new TreeSet(props.keySet());
-	        for (Iterator i = propsSet.iterator(); i.hasNext();) {
-	            final Object next = i.next();
-	%>
-	<tr>
-		<td><%=next%></td>
-		<td><%=props.get(next)%></td>
-	</tr>
-	<%
-	    }
-	%>
-</table>
-<%
-    } catch (Exception e) {
-%>
-<p>
-	<i>not available</i>
-</p>
-<%
-    }
-%>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    for (final String propertyName : new TreeSet<String>(System
+					            .getProperties().stringPropertyNames())) {
+					%>
+					<tr>
+						<td><%=propertyName%></td>
+						<%
+						    if (System.getProperty(propertyName).contains(";")) {
+						%>
+						<td>
+							<ul>
+								<%
+								    for (final String pathElement : System.getProperty(
+								                    propertyName).split(";")) {
+								%>
+								<li><%=pathElement%></li>
+								<%
+								    }
+								%>
+							</ul>
+						</td>
+						<%
+						    } else if (System.getProperty(propertyName).contains(",")) {
+						%>
+						<td>
+							<ul>
+								<%
+								    for (final String pathElement : System.getProperty(
+								                    propertyName).split(",")) {
+								%>
+								<li><%=pathElement%></li>
+								<%
+								    }
+								%>
+							</ul>
+						</td>
+						<%
+						    } else {
+						%>
+						<td><%=System.getProperty(propertyName)%></td>
+						<%
+						    }
+						%>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
 
-<h1>
-	<a name="session">Session Attributes</a>
-</h1>
-<%
-    try {
-%>
-<table border="1">
-	<tr>
-		<th>Name</th>
-		<th>Value</th>
-	</tr>
-	<%
-	    final Enumeration sessionAttributeNames = request.getSession(
-	                false).getAttributeNames();
-	        while (sessionAttributeNames.hasMoreElements()) {
-	            final String next = (String) sessionAttributeNames
-	                    .nextElement();
-	%>
-	<tr>
-		<td><%=next%></td>
-		<td><%=request.getSession().getAttribute(next)%></td>
-	</tr>
-	<%
-	    }
-	%>
-</table>
-<%
-    } catch (Exception e) {
-%>
-<p>
-	<i>not available</i>
-</p>
-<%
-    }
-%>
+				<h1>
+					<a id="session">Session Attributes</a>
+				</h1>
+				<%
+				    try {
+				        final Enumeration<String> sessionAttributeNames = request
+				                .getSession(false).getAttributeNames();
+				%>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    while (sessionAttributeNames.hasMoreElements()) {
+					            final String next = (String) sessionAttributeNames
+					                    .nextElement();
+					%>
+					<tr>
+						<td><%=next%></td>
+						<td><%=request.getSession().getAttribute(next)%></td>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
+				<%
+				    } catch (Exception e) {
+				%>
+				<div class="alert alert-warning">
+					<i>no HttpSession available</i>
+				</div>
+				<%
+				    }
+				%>
 
 
-<h1>
-	<a id="cookies">Cookies</a>
-</h1>
-<table border="1">
-	<tr>
-		<th>Name</th>
-		<th>Value</th>
-	</tr>
-	<%
-	    Cookie[] cookies = request.getCookies();
-	    for (int i = 0; cookies != null && i < cookies.length; ++i) {
-	%>
-	<tr>
-		<td><%=cookies[i].getName()%></td>
-		<td><%=cookies[i].getValue()%></td>
-	</tr>
-	<%
-	    }
-	%>
-</table>
+				<h1>
+					<a id="cookies">Cookies</a>
+				</h1>
+				<table class="table">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    final Cookie[] cookies = request.getCookies();
+					    for (int i = 0; cookies != null && i < cookies.length; ++i) {
+					%>
+					<tr>
+						<td><%=cookies[i].getName()%></td>
+						<td><%=cookies[i].getValue()%></td>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
