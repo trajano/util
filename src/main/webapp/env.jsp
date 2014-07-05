@@ -20,6 +20,7 @@
 					data-spy="affix">
 					<li class="active"><a href="#request">Request Data</a></li>
 					<li><a href="#header">HTTP Request Header</a></li>
+					<li><a href="#request-attributes">HTTP Request Attributes</a></li>
 					<li><a href="#env">System Environment Variables</a></li>
 					<li><a href="#properties">System Properties</a></li>
 					<li><a href="#session">Session Attributes</a></li>
@@ -83,6 +84,75 @@
 					<tr>
 						<td><%=next%></td>
 						<td><%=request.getHeader(next)%></td>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
+
+				<h3>Common multi-value headers</h3>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<tr>
+						<td>accept</td>
+						<td>
+							<ul>
+								<%
+								final Enumeration accept = request.getHeaders("accept"); 
+					    		while (accept.hasMoreElements()) {
+							        final Object next = accept.nextElement();
+								%>
+								<li><%=next%></li>
+								<% 
+								}
+					    		%>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td>accept-language</td>
+						<td>
+							<ul>
+								<%
+								final Enumeration acceptLanguage = request.getHeaders("accept-language"); 
+					    		while (acceptLanguage.hasMoreElements()) {
+							        final Object next = acceptLanguage.nextElement();
+								%>
+								<li><%=next%></li>
+								<% 
+								}
+					    		%>
+							</ul>
+						</td>
+					</tr>
+				</table>
+
+				<h2>
+					<a id="request-attributes">HTTP Request Attributes</a>
+				</h2>
+				<%
+				    @SuppressWarnings("unchecked")
+				    final Enumeration<String> requestAttributeNames = request.getAttributeNames();
+				%>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    while (requestAttributeNames.hasMoreElements()) {
+					        final String next = requestAttributeNames.nextElement();
+					%>
+					<tr>
+						<td><%=next%></td>
+						<td><%=request.getAttribute(next)%></td>
 					</tr>
 					<%
 					    }
@@ -241,8 +311,11 @@
 						<th>Value</th>
 					</tr>
 					<%
+						int c = 0;
 					    final Cookie[] cookies = request.getCookies();
 					    for (int i = 0; cookies != null && i < cookies.length; ++i) {
+					    	c += cookies[i].getName().length();
+					    	c += cookies[i].getValue().length();
 					%>
 					<tr>
 						<td><%=cookies[i].getName()%></td>
@@ -251,6 +324,10 @@
 					<%
 					    }
 					%>
+					<tr>
+						<th>Size of names and values</th>
+						<td><%=c%></td>
+					</tr>
 				</table>
 			</div>
 		</div>
