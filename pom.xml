@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>net.trajano</groupId>
-		<artifactId>trajano</artifactId>
-		<version>5</version>
-	</parent>
-	<groupId>net.trajano.util</groupId>
-	<artifactId>util</artifactId>
-	<name>Utility Web Application</name>
-	<version>3.0.0-SNAPSHOT</version>
-	<description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.</description>
-	<packaging>war</packaging>
-	<dependencies>
-		<dependency>
-			<groupId>javaee</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>5</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	<licenses>
-		<license>
-			<name>Eclipse Public License 1.0</name>
-			<url>http://www.spdx.org/licenses/EPL-1.0</url>
-		</license>
-	</licenses>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.16</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
-			</plugin>
-		</plugins>
-	</build>
-	<scm>
-		<connection>scm:git:https://github.com/trajano/${project.artifactId}</connection>
-		<developerConnection>scm:git:ssh://git@github.com/trajano/${project.artifactId}.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-	<inceptionYear>2006</inceptionYear>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.trajano</groupId>
+        <artifactId>trajano</artifactId>
+        <version>9-SNAPSHOT</version>
+    </parent>
+    <groupId>net.trajano.util</groupId>
+    <artifactId>util</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Utility Web Application</name>
+    <description>This provides a set of utility JSPs that can be used in debugging JNDI, JMS, JDBC and EJBs.</description>
+    <url>http://site.trajano.net/util/</url>
+    <inceptionYear>2006</inceptionYear>
+    <licenses>
+        <license>
+            <name>Eclipse Public License 1.0</name>
+            <url>http://www.spdx.org/licenses/EPL-1.0</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/trajano/${project.artifactId}</connection>
+        <developerConnection>scm:git:ssh://git@github.com/trajano/${project.artifactId}.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>http://github.com/trajano/${project.artifactId}</url>
+    </scm>
+    <distributionManagement>
+        <site>
+            <id>gh-pages</id>
+            <name>Trajano Github Pages</name>
+            <url>github:http://site.trajano.net/${project.artifactId}/</url>
+        </site>
+    </distributionManagement>
+    <dependencies>
+        <dependency>
+            <groupId>javaee</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>5</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
-
