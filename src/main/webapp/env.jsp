@@ -20,11 +20,13 @@
 					data-spy="affix">
 					<li class="active"><a href="#request">Request Data</a></li>
 					<li><a href="#header">HTTP Request Header</a></li>
+					<li><a href="#params">HTTP Request Parameter</a></li>
 					<li><a href="#request-attributes">HTTP Request Attributes</a></li>
 					<li><a href="#env">System Environment Variables</a></li>
 					<li><a href="#properties">System Properties</a></li>
 					<li><a href="#session">Session Attributes</a></li>
 					<li><a href="#cookies">Cookies</a></li>
+					<li><a href="#form">Form</a></li>
 				</ul>
 			</div>
 			<div class="col-md-9 column">
@@ -51,6 +53,10 @@
 						<tr>
 							<th>Remote User</th>
 							<td><%=request.getRemoteUser()%></td>
+						</tr>
+						<tr>
+							<th>Method</th>
+							<td><%=request.getMethod()%></td>
 						</tr>
 						<tr>
 							<th>Secure</th>
@@ -132,6 +138,32 @@
 					</tr>
 				</table>
 
+				<h2>
+					<a id="params">HTTP Request Paramters</a>
+				</h2>
+				<%
+				    @SuppressWarnings("unchecked")
+				    final Enumeration<String> names = request.getParameterNames();
+				%>
+				<table class="table">
+					<col width="40%">
+					<col width="60%">
+					<tr>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					<%
+					    while (names.hasMoreElements()) {
+					        final String next = names.nextElement();
+					%>
+					<tr>
+						<td><%=next%></td>
+						<td><%=request.getParameter(next)%></td>
+					</tr>
+					<%
+					    }
+					%>
+				</table>
 				<h2>
 					<a id="request-attributes">HTTP Request Attributes</a>
 				</h2>
@@ -309,6 +341,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Value</th>
+						<th>Max Age (should be -1 regardless)</th>
 					</tr>
 					<%
 						int c = 0;
@@ -320,6 +353,7 @@
 					<tr>
 						<td><%=cookies[i].getName()%></td>
 						<td><%=cookies[i].getValue()%></td>
+						<td><%=cookies[i].getMaxAge()%></td>
 					</tr>
 					<%
 					    }
@@ -329,6 +363,19 @@
 						<td><%=c%></td>
 					</tr>
 				</table>
+
+				<h2>
+					<a id="form">Form POST</a>
+				</h2>
+				<p>Use this to send a post request to this JSP and see what kind
+					of data gets sent.</p>
+				<form action="env.jsp" method="post" onsubmit="">
+					<input type="text" name="text"> <input type="checkbox"
+						name="checkbox">
+					<textarea name="textarea"></textarea>
+					<input type="submit">
+				</form>
+
 			</div>
 		</div>
 	</div>
