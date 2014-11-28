@@ -1,4 +1,7 @@
-<%@ page import="java.util.*" session="false"%>
+<%@ page pageEncoding="utf8" import="java.util.*"
+	contentType="text/html; charset=utf8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,31 +43,31 @@
 					<tbody>
 						<tr>
 							<th>Auth Type</th>
-							<td><%=request.getAuthType()%></td>
+							<td>${pageContext.request.authType}</td>
 						</tr>
 						<tr>
 							<th>Character Encoding</th>
-							<td><%=request.getCharacterEncoding()%></td>
+							<td>${pageContext.request.characterEncoding}</td>
 						</tr>
 						<tr>
 							<th>Context Path</th>
-							<td><%=request.getContextPath()%></td>
+							<td>${pageContext.request.contextPath}</td>
 						</tr>
 						<tr>
 							<th>Remote User</th>
-							<td><%=request.getRemoteUser()%></td>
+							<td>${pageContext.request.remoteUser}</td>
 						</tr>
 						<tr>
 							<th>Method</th>
-							<td><%=request.getMethod()%></td>
+							<td>${pageContext.request.method}</td>
 						</tr>
 						<tr>
 							<th>Secure</th>
-							<td><%=request.isSecure()%></td>
+							<td>${pageContext.request.secure}</td>
 						</tr>
 						<tr>
 							<th>User Principal</th>
-							<td><%=request.getUserPrincipal()%></td>
+							<td>${pageContext.request.userPrincipal}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -72,10 +75,6 @@
 				<h2>
 					<a id="header">HTTP Request Header</a>
 				</h2>
-				<%
-				    @SuppressWarnings("unchecked")
-				    final Enumeration<String> headerNames = request.getHeaderNames();
-				%>
 				<table class="table">
 					<col width="40%">
 					<col width="60%">
@@ -83,17 +82,12 @@
 						<th>Name</th>
 						<th>Value</th>
 					</tr>
-					<%
-					    while (headerNames.hasMoreElements()) {
-					        final String next = headerNames.nextElement();
-					%>
-					<tr>
-						<td><%=next%></td>
-						<td><%=request.getHeader(next)%></td>
-					</tr>
-					<%
-					    }
-					%>
+					<c:forEach var="next" items="${header}">
+						<tr>
+							<td>${next.key}</td>
+							<td>${next.value}</td>
+						</tr>
+					</c:forEach>
 				</table>
 
 				<h3>Common multi-value headers</h3>
@@ -108,15 +102,9 @@
 						<td>accept</td>
 						<td>
 							<ul>
-								<%
-								final Enumeration accept = request.getHeaders("accept"); 
-					    		while (accept.hasMoreElements()) {
-							        final Object next = accept.nextElement();
-								%>
-								<li><%=next%></li>
-								<% 
-								}
-					    		%>
+								<c:forTokens var="item" items="${header.accept}" delims=",">
+									<li>${item}</li>
+								</c:forTokens>
 							</ul>
 						</td>
 					</tr>
@@ -124,27 +112,18 @@
 						<td>accept-language</td>
 						<td>
 							<ul>
-								<%
-								final Enumeration acceptLanguage = request.getHeaders("accept-language"); 
-					    		while (acceptLanguage.hasMoreElements()) {
-							        final Object next = acceptLanguage.nextElement();
-								%>
-								<li><%=next%></li>
-								<% 
-								}
-					    		%>
+								<c:forTokens var="item" items="${header['accept-language']}"
+									delims=",">
+									<li>${item}</li>
+								</c:forTokens>
 							</ul>
 						</td>
 					</tr>
 				</table>
 
 				<h2>
-					<a id="params">HTTP Request Paramters</a>
+					<a id="params">HTTP Request Parameters</a>
 				</h2>
-				<%
-				    @SuppressWarnings("unchecked")
-				    final Enumeration<String> names = request.getParameterNames();
-				%>
 				<table class="table">
 					<col width="40%">
 					<col width="60%">
@@ -152,44 +131,37 @@
 						<th>Name</th>
 						<th>Value</th>
 					</tr>
-					<%
-					    while (names.hasMoreElements()) {
-					        final String next = names.nextElement();
-					%>
-					<tr>
-						<td><%=next%></td>
-						<td><%=request.getParameter(next)%></td>
-					</tr>
-					<%
-					    }
-					%>
+					<c:forEach var="next" items="${param}">
+						<tr>
+							<td>${next.key}</td>
+							<td>${next.value}</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<h2>
 					<a id="request-attributes">HTTP Request Attributes</a>
 				</h2>
-				<%
-				    @SuppressWarnings("unchecked")
-				    final Enumeration<String> requestAttributeNames = request.getAttributeNames();
-				%>
-				<table class="table">
-					<col width="40%">
-					<col width="60%">
-					<tr>
-						<th>Name</th>
-						<th>Value</th>
-					</tr>
-					<%
-					    while (requestAttributeNames.hasMoreElements()) {
-					        final String next = requestAttributeNames.nextElement();
-					%>
-					<tr>
-						<td><%=next%></td>
-						<td><%=request.getAttribute(next)%></td>
-					</tr>
-					<%
-					    }
-					%>
-				</table>
+				<c:if test="${empty requestScope}">
+					<div class="alert alert-warning">
+						<i>requestScope is empty</i>
+					</div>
+				</c:if>
+				<c:if test="${not empty requestScope}">
+					<table class="table">
+						<col width="40%">
+						<col width="60%">
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+						<c:forEach var="next" items="${requestScope}">
+							<tr>
+								<td>${next.key}</td>
+								<td>${next.value}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 
 				<h2>
 					<a id="env">System Environment Variables</a>
@@ -208,12 +180,14 @@
 					<tr>
 						<td><%=envVar%></td>
 						<%
-						    if (env.get(envVar).contains(";")) {
+						    if (env.get(envVar)
+						                .contains(";")) {
 						%>
 						<td>
 							<ul>
 								<%
-								    for (final String pathElement : env.get(envVar).split(";")) {
+								    for (final String pathElement : env.get(envVar)
+								                    .split(";")) {
 								%>
 								<li><%=pathElement%></li>
 								<%
@@ -246,19 +220,20 @@
 						<th>Value</th>
 					</tr>
 					<%
-					    for (final String propertyName : new TreeSet<String>(System
-					            .getProperties().stringPropertyNames())) {
+					    for (final String propertyName : new TreeSet<String>(System.getProperties()
+					            .stringPropertyNames())) {
 					%>
 					<tr>
 						<td><%=propertyName%></td>
 						<%
-						    if (System.getProperty(propertyName).contains(";")) {
+						    if (System.getProperty(propertyName)
+						                .contains(";")) {
 						%>
 						<td>
 							<ul>
 								<%
-								    for (final String pathElement : System.getProperty(
-								                    propertyName).split(";")) {
+								    for (final String pathElement : System.getProperty(propertyName)
+								                    .split(";")) {
 								%>
 								<li><%=pathElement%></li>
 								<%
@@ -267,13 +242,14 @@
 							</ul>
 						</td>
 						<%
-						    } else if (System.getProperty(propertyName).contains(",")) {
+						    } else if (System.getProperty(propertyName)
+						                .contains(",")) {
 						%>
 						<td>
 							<ul>
 								<%
-								    for (final String pathElement : System.getProperty(
-								                    propertyName).split(",")) {
+								    for (final String pathElement : System.getProperty(propertyName)
+								                    .split(",")) {
 								%>
 								<li><%=pathElement%></li>
 								<%
@@ -297,42 +273,27 @@
 				<h2>
 					<a id="session">Session Attributes</a>
 				</h2>
-				<%
-				    try {
-				        @SuppressWarnings("unchecked")
-				        final Enumeration<String> sessionAttributeNames = request
-				                .getSession(false).getAttributeNames();
-				%>
-				<table class="table">
-					<col width="40%">
-					<col width="60%">
-					<tr>
-						<th>Name</th>
-						<th>Value</th>
-					</tr>
-					<%
-					    while (sessionAttributeNames.hasMoreElements()) {
-					            final String next = (String) sessionAttributeNames
-					                    .nextElement();
-					%>
-					<tr>
-						<td><%=next%></td>
-						<td><%=request.getSession().getAttribute(next)%></td>
-					</tr>
-					<%
-					    }
-					%>
-				</table>
-				<%
-				    } catch (Exception e) {
-				%>
-				<div class="alert alert-warning">
-					<i>no HttpSession available</i>
-				</div>
-				<%
-				    }
-				%>
-
+				<c:if test="${empty sessionScope}">
+					<div class="alert alert-warning">
+						<i>HttpSession is empty or not available</i>
+					</div>
+				</c:if>
+				<c:if test="${not empty sessionScope}">
+					<table class="table">
+						<col width="40%">
+						<col width="60%">
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+						<c:forEach var="next" items="${sessionScope}">
+							<tr>
+								<td>${next.key}</td>
+								<td>${next.value}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 
 				<h2>
 					<a id="cookies">Cookies</a>
@@ -341,26 +302,21 @@
 					<tr>
 						<th>Name</th>
 						<th>Value</th>
-						<th>Max Age (should be -1 regardless)</th>
 					</tr>
-					<%
-						int c = 0;
-					    final Cookie[] cookies = request.getCookies();
-					    for (int i = 0; cookies != null && i < cookies.length; ++i) {
-					    	c += cookies[i].getName().length();
-					    	c += cookies[i].getValue().length();
-					%>
-					<tr>
-						<td><%=cookies[i].getName()%></td>
-						<td><%=cookies[i].getValue()%></td>
-						<td><%=cookies[i].getMaxAge()%></td>
-					</tr>
-					<%
-					    }
-					%>
+					<c:set var="cookieSize" value="0" />
+					<c:forEach var="next" items="${cookie}">
+						<tr>
+							<td>${next.key}</td>
+							<td>${next.value.value}</td>
+						</tr>
+
+						<c:set var="cookieSize"
+							value="${cookieSize + fn:length(next.key) + fn:length(next.value.value) }" />
+
+					</c:forEach>
 					<tr>
 						<th>Size of names and values</th>
-						<td><%=c%></td>
+						<td>${cookieSize}</td>
 					</tr>
 				</table>
 
@@ -373,7 +329,7 @@
 					<input type="text" name="text"> <input type="checkbox"
 						name="checkbox">
 					<textarea name="textarea"></textarea>
-					<input type="submit">
+					<input type="submit" class="btn btn-default">
 				</form>
 
 			</div>
